@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeDeX", "ZeDeX\ZeDeX.csproj", "{5304CA77-82FF-4798-ACBA-7F2D83E3A480}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeDeX.Domain", "ZeDeX.Domain\ZeDeX.Domain.csproj", "{25387637-7C2D-48C0-B43A-45ED9578E2B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeDeX.Infrastructure", "ZeDeX.Infrastructure\ZeDeX.Infrastructure.csproj", "{F236DA79-E005-403A-9D22-CEB94B502997}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeDeX.AppService", "ZeDeX.AppService\ZeDeX.AppService.csproj", "{0953F45E-07D9-4ED0-AF66-F5379BCD5813}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +19,17 @@ Global
 		{5304CA77-82FF-4798-ACBA-7F2D83E3A480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5304CA77-82FF-4798-ACBA-7F2D83E3A480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5304CA77-82FF-4798-ACBA-7F2D83E3A480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25387637-7C2D-48C0-B43A-45ED9578E2B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25387637-7C2D-48C0-B43A-45ED9578E2B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25387637-7C2D-48C0-B43A-45ED9578E2B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25387637-7C2D-48C0-B43A-45ED9578E2B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F236DA79-E005-403A-9D22-CEB94B502997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F236DA79-E005-403A-9D22-CEB94B502997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F236DA79-E005-403A-9D22-CEB94B502997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F236DA79-E005-403A-9D22-CEB94B502997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0953F45E-07D9-4ED0-AF66-F5379BCD5813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0953F45E-07D9-4ED0-AF66-F5379BCD5813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0953F45E-07D9-4ED0-AF66-F5379BCD5813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0953F45E-07D9-4ED0-AF66-F5379BCD5813}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
