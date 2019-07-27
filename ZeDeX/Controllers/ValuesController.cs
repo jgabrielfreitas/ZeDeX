@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ZeDeX.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("values")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : ZedexBaseController
     {
         // GET api/values
         [HttpGet]
