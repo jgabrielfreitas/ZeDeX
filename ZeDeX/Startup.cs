@@ -60,15 +60,15 @@ namespace ZeDeX
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
-
             app.UseSwagger();
             app.UseSwaggerUI(action =>
             {
-                action.SwaggerEndpoint("/swagger/v1/swagger.json", "Conversor de Temperaturas");
+                action.SwaggerEndpoint("/swagger/v1/swagger.json", "Zedex");
                 action.RoutePrefix = string.Empty;
             });
+
+            app.UseHttpsRedirection();
+            app.UseMvc();
         }
     }
 }
