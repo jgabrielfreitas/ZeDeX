@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
-using ZeDeX.AppService.Common;
+using System.Collections.Generic;
+using System.Linq;
 using ZeDeX.DI;
 
 namespace ZeDeX
@@ -22,8 +24,10 @@ namespace ZeDeX
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                             .AddJsonOptions(options =>  options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddMvc(config =>
+                            config.Filters.Add(typeof(ValidateModelStateAttribute)))
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                    .AddJsonOptions(options =>  options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddSwaggerGen(c =>
             {
@@ -65,6 +69,40 @@ namespace ZeDeX
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        public class ValidateModelStateAttribute : ActionFilterAttribute
+        {
+            public override void OnActionExecuting(ActionExecutingContext context)
+            {
+                if (!context.ModelState.IsValid)
+                {
+
+
+                    var invalidProperties = GetInvalidProperties(context);
+                    context.Result = new BadRequestObjectResult(new { InvalidProperties = invalidProperties });
+                }
+            }
+
+            private static IEnumerable<InvalidProperty> GetInvalidProperties(ActionExecutingContext context)
+            {
+                var result = new List<InvalidProperty>();
+
+                foreach (var state in context.ModelState)
+                {
+                    var invalidProperty = new InvalidProperty();
+                    invalidProperty.Name = state.Key;
+                    invalidProperty.Details = state.Value.Errors.Select(p => p.ErrorMessage);
+                    result.Add(invalidProperty);
+                }
+                return result;
+            }
+
+            private class InvalidProperty
+            {
+                public string Name { get; set; }
+                public object Details { get; set; }
+            }
         }
     }
 }
