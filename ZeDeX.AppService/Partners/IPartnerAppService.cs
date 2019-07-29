@@ -10,7 +10,7 @@ namespace ZeDeX.AppService.Partners
         Task CreatePartner(CreatePartnerCommand command);
         Task<PartnerDTO> GetPartnerById(int partnerId);
 
-        Task<IEnumerable<PartnerDTO>> GetNearestByLocation(double lat, double @long);
+        Task<NearbyPartnersDTO> GetNearestByLocation(double lat, double @long);
 
     }
 }

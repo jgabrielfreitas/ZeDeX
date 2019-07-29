@@ -54,14 +54,14 @@ namespace ZeDeX.AppService.Partners
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<IEnumerable<PartnerDTO>> GetNearestByLocation(double lat, double @long)
+        public async Task<NearbyPartnersDTO> GetNearestByLocation(double lat, double @long)
         {
             var coordinate = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326).CreatePoint(new Coordinate(@long, lat));
 
             var result = await _partnerRepository.GetNearest(coordinate);
             if (result == null) return null;
 
-            return result.Select(partner => ConvertEntityToDTO(partner));
+            return new NearbyPartnersDTO { Pdvs = result.Select(partner => ConvertEntityToDTO(partner)) };
         }
 
         public async Task<PartnerDTO> GetPartnerById(int partnerId)
