@@ -55,14 +55,6 @@ namespace ZeDeX.AppService.Partners
             var partner = _partnerRepository.Select(partnerId);
             if (partner == null) return null;
 
-            var coordinates = partner.Address.Location.Coordinates;
-            string json = Write(partner.Address);
-
-            var areaCoordinates = partner.CoverageArea.Location.Coordinate;
-            string json_ = Write(partner.CoverageArea);
-
-
-
             return new PartnerDTO {
                 Id = partner.Id,
                 Name = partner.Name,
@@ -70,15 +62,6 @@ namespace ZeDeX.AppService.Partners
                 CoverageArea = partner.CoverageArea.Location,
                 DocumentNumber = partner.DocumentNumber
             };
-        }
-
-        public string Write(object value)
-        {
-            JsonSerializer g = GeoJsonSerializer.CreateDefault();
-            StringBuilder sb = new StringBuilder();
-            using (StringWriter sw = new StringWriter(sb))
-                g.Serialize(sw, value);
-            return sb.ToString();
         }
     }
 }
