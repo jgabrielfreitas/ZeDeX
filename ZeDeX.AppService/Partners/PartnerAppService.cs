@@ -1,5 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using NetTopologySuite.IO;
+using Newtonsoft.Json;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 using ZeDeX.AppService.Partners.Command;
+using ZeDeX.AppService.Partners.DTOs;
 using ZeDeX.Domain.Common;
 using ZeDeX.Domain.Common.Entities;
 using ZeDeX.Domain.Repositories;
@@ -43,6 +48,20 @@ namespace ZeDeX.AppService.Partners
 
             _partnerRepository.Insert(partner);
             await _unitOfWork.CommitAsync();
+        }
+
+        public async Task<PartnerDTO> GetPartnerById(int partnerId)
+        {
+            var partner = _partnerRepository.Select(partnerId);
+            if (partner == null) return null;
+
+            return new PartnerDTO {
+                Id = partner.Id,
+                Name = partner.Name,
+                Address = partner.Address.Location,
+                CoverageArea = partner.CoverageArea.Location,
+                DocumentNumber = partner.DocumentNumber
+            };
         }
     }
 }

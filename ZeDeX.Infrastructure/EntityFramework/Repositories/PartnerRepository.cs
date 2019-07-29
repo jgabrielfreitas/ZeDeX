@@ -1,4 +1,5 @@
 ﻿using GeoAPI.Geometries;
+using NetTopologySuite.Geometries;
 using System.Linq;
 using ZeDeX.Domain.Common.Entities;
 using ZeDeX.Domain.Repositories;
@@ -36,7 +37,7 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
                 CoverageArea = new CoverageArea
                 {
                     Id = e.CoverageArea.Id,
-                    Location = e.CoverageArea.Location as IMultiPolygon
+                    Location = e.CoverageArea.Location as MultiPolygon
                 }
             }).AsQueryable();
         }
@@ -68,7 +69,20 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
 
         public Partner Select(int entityId)
         {
-            var partner = _context.Partners.Where(e => e.Id == entityId).FirstOrDefault();
+            var partner = (from p in _context.Partners
+                           join pa in _context.PartnerAddresses on p.AddressId equals pa.Id
+                           join e in _context.Employees on p.OwnerId equals e.Id
+                           join ca in _context.CoverageAreas on p.CoverageAreaId equals ca.Id
+                           where p.Id == entityId
+                           select new PartnerPersistenceModel {
+                               Id = p.Id,
+                               Name = p.Name,
+                               DocumentNumber = p.DocumentNumber,
+                               Address = pa,
+                               Owner = e,
+                               CoverageArea = ca
+                           }).FirstOrDefault();
+
             if (partner == null) return null;
 
             return new Partner
@@ -90,7 +104,7 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
                 CoverageArea = new CoverageArea
                 {
                     Id = partner.CoverageArea.Id,
-                    Location = partner.CoverageArea.Location as IMultiPolygon
+                    Location = partner.CoverageArea.Location as MultiPolygon
                 }
             };
         }
