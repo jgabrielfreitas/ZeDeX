@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using ZeDeX.AppService.Partners;
 using ZeDeX.AppService.Partners.Command;
@@ -19,7 +20,18 @@ namespace ZeDeX.Controllers
         public async Task<IActionResult> CreatePartner([FromBody] CreatePartnerCommand command)
         {
             await _appService.CreatePartner(command);
-            return Ok();
+            return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPartner(int id)
+        {
+            var result = await _appService.GetPartnerById(id);
+
+            string json = JsonConvert.SerializeObject(result, Formatting.Indented);
+            if (result == null) return NotFound();
+
+            return Ok(json);
         }
     }
 }
