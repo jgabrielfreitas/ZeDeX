@@ -1,5 +1,9 @@
-﻿using NetTopologySuite.Geometries;
+﻿using GeoAPI.Geometries;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO.Converters;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using ZeDeX.AppService.Common;
 
 namespace ZeDeX.AppService.Partners.Command
 {
@@ -15,30 +19,13 @@ namespace ZeDeX.AppService.Partners.Command
         public string lastName { get; set; }
     }
 
-    public class CoverageArea
-    {
-        public string type { get; set; }
-        public List<List<List<List<double>>>> coordinates { get; set; }
-    }
-
-    public class Address
-    {
-        public string type { get; set; }
-        public List<double> coordinates { get; set; }
-
-        private int latitudePosition = 0;
-        private int longitudePosition = 1;
-        public double GetLatitude() => coordinates.IndexOf(latitudePosition);
-        public double GetLongitude() => coordinates.IndexOf(longitudePosition);
-    }
-
     public class Pdv
     {
         public string document { get; set; }
         public string name { get; set; }
-        [Newtonsoft.Json.JsonConverter(typeof(NetTopologySuite.IO.Converters.GeometryConverter))]
+        [JsonConverter(typeof(GeoJsonConverter))]
         public MultiPolygon coverageArea { get; set; }
-        [Newtonsoft.Json.JsonConverter(typeof(NetTopologySuite.IO.Converters.GeometryConverter))]
+        [JsonConverter(typeof(GeoJsonConverter))]
         public Point address { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace ZeDeX.AppService.Partners.DTOs
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string OwnerName { get; set; }
         public string DocumentNumber { get; set; }
         [JsonConverter(typeof(GeoJsonConverter))]
         public Point Address { get; set; }

@@ -1,6 +1,10 @@
-﻿using NetTopologySuite.IO;
+﻿using GeoAPI.Geometries;
+using NetTopologySuite;
+using NetTopologySuite.IO;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZeDeX.AppService.Partners.Command;
@@ -50,18 +54,31 @@ namespace ZeDeX.AppService.Partners
             await _unitOfWork.CommitAsync();
         }
 
+        public async Task<NearbyPartnersDTO> GetNearestByLocation(double lat, double @long)
+        {
+            var coordinate = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326).CreatePoint(new Coordinate(@long, lat));
+
+            var result = await _partnerRepository.GetNearest(coordinate);
+            if (result == null) return null;
+
+            return new NearbyPartnersDTO { Pdvs = result.Select(partner => ConvertEntityToDTO(partner)) };
+        }
+
         public async Task<PartnerDTO> GetPartnerById(int partnerId)
         {
             var partner = _partnerRepository.Select(partnerId);
             if (partner == null) return null;
 
-            return new PartnerDTO {
-                Id = partner.Id,
-                Name = partner.Name,
-                Address = partner.Address.Location,
-                CoverageArea = partner.CoverageArea.Location,
-                DocumentNumber = partner.DocumentNumber
-            };
+            return ConvertEntityToDTO(partner);
         }
+
+        private PartnerDTO ConvertEntityToDTO(Partner partner) => new PartnerDTO
+        {
+            Id = partner.Id,
+            Name = partner.Name,
+            Address = partner.Address.Location,
+            CoverageArea = partner.CoverageArea.Location,
+            DocumentNumber = partner.DocumentNumber
+        };
     }
 }

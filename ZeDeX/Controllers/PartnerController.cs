@@ -31,5 +31,15 @@ namespace ZeDeX.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetNearestPartner([FromQuery] double lat, [FromQuery] double @long)
+        {
+            var result = await _appService.GetNearestByLocation(lat, @long);
+            if (result == null) return NotFound();
+
+            return Ok(result);
+        }
+
     }
 }
