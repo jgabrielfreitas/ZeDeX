@@ -27,11 +27,9 @@ namespace ZeDeX.Controllers
         public async Task<IActionResult> GetPartner(int id)
         {
             var result = await _appService.GetPartnerById(id);
-
-            string json = JsonConvert.SerializeObject(result, Formatting.Indented);
             if (result == null) return NotFound();
 
-            return Ok(json);
+            return Ok(result);
         }
     }
 }

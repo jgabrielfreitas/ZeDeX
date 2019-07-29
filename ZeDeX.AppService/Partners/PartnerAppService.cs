@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using NetTopologySuite.IO;
+using Newtonsoft.Json;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 using ZeDeX.AppService.Partners.Command;
 using ZeDeX.AppService.Partners.DTOs;
 using ZeDeX.Domain.Common;
@@ -51,6 +55,14 @@ namespace ZeDeX.AppService.Partners
             var partner = _partnerRepository.Select(partnerId);
             if (partner == null) return null;
 
+            var coordinates = partner.Address.Location.Coordinates;
+            string json = Write(partner.Address);
+
+            var areaCoordinates = partner.CoverageArea.Location.Coordinate;
+            string json_ = Write(partner.CoverageArea);
+
+
+
             return new PartnerDTO {
                 Id = partner.Id,
                 Name = partner.Name,
@@ -58,6 +70,15 @@ namespace ZeDeX.AppService.Partners
                 CoverageArea = partner.CoverageArea.Location,
                 DocumentNumber = partner.DocumentNumber
             };
+        }
+
+        public string Write(object value)
+        {
+            JsonSerializer g = GeoJsonSerializer.CreateDefault();
+            StringBuilder sb = new StringBuilder();
+            using (StringWriter sw = new StringWriter(sb))
+                g.Serialize(sw, value);
+            return sb.ToString();
         }
     }
 }
