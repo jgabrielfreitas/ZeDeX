@@ -1,4 +1,6 @@
-﻿using NetTopologySuite.Geometries;
+﻿using GeoAPI.Geometries;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,13 +25,13 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
             return _context.Partners.Select(partner => ConvertEntityToPersistenceModel(partner)).AsQueryable();
         }
 
-        public async Task<IEnumerable<Partner>> GetNearest(double lat, double @long)
+        public async Task<IEnumerable<Partner>> GetNearest(IPoint coordinates)
         {
-            var coord = new Point(lat, @long);
             var partners = (from p in _context.Partners
                             join pa in _context.PartnerAddresses on p.AddressId equals pa.Id
                             join e in _context.Employees on p.OwnerId equals e.Id
                             join ca in _context.CoverageAreas on p.CoverageAreaId equals ca.Id
+                            where ca.Location.Contains(coordinates)
                             select new PartnerPersistenceModel
                             {
                                 Id = p.Id,
@@ -38,7 +40,7 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
                                 Address = pa,
                                 Owner = e,
                                 CoverageArea = ca
-                            }).OrderBy(x => x.CoverageArea.Location.Distance(coord)).Take(10);
+                            }).OrderBy(x => x.Address.Location.Distance(coordinates)).Take(10);
 
             return partners.Select(partner => ConvertEntityToPersistenceModel(partner)).ToList();
         }
@@ -59,7 +61,7 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
                 },
                 CoverageArea = new CoverageAreaPersistenceModel
                 {
-                    Location = entity.CoverageArea.Location
+                    Location = entity.CoverageArea.Location.Normalized().Reverse()
                 },
                 DocumentNumber = entity.DocumentNumber,
                 Name = entity.Name

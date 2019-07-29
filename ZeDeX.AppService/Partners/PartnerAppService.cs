@@ -1,4 +1,6 @@
-﻿using NetTopologySuite.IO;
+﻿using GeoAPI.Geometries;
+using NetTopologySuite;
+using NetTopologySuite.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -54,7 +56,9 @@ namespace ZeDeX.AppService.Partners
 
         public async Task<IEnumerable<PartnerDTO>> GetNearestByLocation(double lat, double @long)
         {
-            var result = await _partnerRepository.GetNearest(lat, @long);
+            var coordinate = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326).CreatePoint(new Coordinate(@long, lat));
+
+            var result = await _partnerRepository.GetNearest(coordinate);
             if (result == null) return null;
 
             return result.Select(partner => ConvertEntityToDTO(partner));
