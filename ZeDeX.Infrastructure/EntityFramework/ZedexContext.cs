@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZeDeX.Domain.Common;
@@ -23,14 +26,14 @@ namespace ZeDeX.Infrastructure.EntityFramework
         public DbSet<PartnerPersistenceModel> Partners { get; set; }
         private readonly string _connectionString;
 
-        public ZedexContext(string connectionString)
+        public ZedexContext(DbContextOptions<ZedexContext> options, IConfiguration configuration) : base(options)
         {
-            _connectionString = connectionString;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            optionsBuilder.UseSqlServer(_connectionString, options => options.UseNetTopologySuite());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

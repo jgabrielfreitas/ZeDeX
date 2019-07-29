@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Address;
@@ -13,7 +14,8 @@ namespace ZeDeX.Infrastructure.EntityFramework.DbMap.Partner
     {
         public override void ModelBuilder(ModelBuilder model)
         {
-            var entity = model.Entity<PartnerPersistenceModel>(p => {
+            model.Entity<PartnerPersistenceModel>(p =>
+            {
                 p.ToTable("Partners");
                 p.HasKey(e => e.Id);
 
@@ -23,6 +25,7 @@ namespace ZeDeX.Infrastructure.EntityFramework.DbMap.Partner
                 p.HasOne(e => e.Owner).WithOne(v => v.Partner).HasForeignKey<EmployerPersistenceModel>(e => e.Id);
                 p.HasOne(e => e.CoverageArea).WithOne(v => v.Partner).HasForeignKey<CoverageAreaPersistenceModel>(e => e.Id);
             });
+            model.Entity<PartnerPersistenceModel>().Property(p => p.Id).ValueGeneratedOnAdd();
         }
     }
 }

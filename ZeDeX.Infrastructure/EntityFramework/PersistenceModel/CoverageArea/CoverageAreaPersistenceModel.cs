@@ -1,4 +1,4 @@
-﻿using NetTopologySuite.Geometries;
+﻿using GeoAPI.Geometries;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +8,7 @@ namespace ZeDeX.Infrastructure.EntityFramework.PersistenceModel.CoverageArea
 {
     public class CoverageAreaPersistenceModel : EntityPersistenceModelBase
     {
-        public MultiPolygon Location { get; set; }
+        public IGeometry Location { get; set; }
         public PartnerPersistenceModel Partner { get; set; }
     }
 }

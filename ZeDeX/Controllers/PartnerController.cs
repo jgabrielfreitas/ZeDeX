@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ZeDeX.AppService.Partner;
-using ZeDeX.AppService.Partner.Command;
+using ZeDeX.AppService.Partners;
+using ZeDeX.AppService.Partners.Command;
 
 namespace ZeDeX.Controllers
 {

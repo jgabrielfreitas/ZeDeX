@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="1.15.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ZeDeX.Infrastructure\ZeDeX.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

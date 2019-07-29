@@ -6,6 +6,6 @@ namespace ZeDeX.Domain.Common.Entities
 {
     public class OwnerEmployee : Employee
     {
-        public const bool IsOwner = true;
+        public bool IsOwner = true;
     }
 }

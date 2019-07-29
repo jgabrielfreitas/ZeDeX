@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.CoverageArea;
+using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Partner;
 
 namespace ZeDeX.Infrastructure.EntityFramework.DbMap.CoverageArea
 {
@@ -13,7 +14,10 @@ namespace ZeDeX.Infrastructure.EntityFramework.DbMap.CoverageArea
             model.Entity<CoverageAreaPersistenceModel>(p => {
                 p.ToTable("PartnerCoveredAreas");
                 p.HasKey(e => e.Id);
+
+                p.HasOne(e => e.Partner).WithOne(o => o.CoverageArea).HasForeignKey<PartnerPersistenceModel>(pp => pp.CoverageAreaId);
             });
+            model.Entity<CoverageAreaPersistenceModel>().Property(p => p.Id).ValueGeneratedOnAdd();
         }
     }
 }
