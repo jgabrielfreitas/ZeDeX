@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ZeDeX.AppService.Partners;
@@ -17,7 +16,7 @@ namespace ZeDeX.DI
             #region database
 
             services.AddDbContext<ZedexContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), opt => opt.UseNetTopologySuite()));
-            services.AddScoped<IUnitOfWork>(provider => (ZedexContext) provider.GetService(typeof(ZedexContext)));
+            services.AddScoped<IUnitOfWork>(provider => (ZedexContext)provider.GetService(typeof(ZedexContext)));
 
             #endregion
 

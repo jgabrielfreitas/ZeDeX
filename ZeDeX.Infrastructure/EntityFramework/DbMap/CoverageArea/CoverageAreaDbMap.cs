@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.CoverageArea;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Partner;
 
@@ -11,7 +8,8 @@ namespace ZeDeX.Infrastructure.EntityFramework.DbMap.CoverageArea
     {
         public override void ModelBuilder(ModelBuilder model)
         {
-            model.Entity<CoverageAreaPersistenceModel>(p => {
+            model.Entity<CoverageAreaPersistenceModel>(p =>
+            {
                 p.ToTable("PartnerCoveredAreas");
                 p.HasKey(e => e.Id);
 

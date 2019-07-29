@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Employer;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Partner;
 
@@ -11,7 +8,8 @@ namespace ZeDeX.Infrastructure.EntityFramework.DbMap.Emploer
     {
         public override void ModelBuilder(ModelBuilder model)
         {
-            model.Entity<EmployerPersistenceModel>(p => {
+            model.Entity<EmployerPersistenceModel>(p =>
+            {
                 p.ToTable("Emploees");
                 p.HasKey(e => e.Id);
 

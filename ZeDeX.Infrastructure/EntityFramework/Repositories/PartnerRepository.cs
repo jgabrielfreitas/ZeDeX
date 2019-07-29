@@ -1,8 +1,5 @@
 ﻿using GeoAPI.Geometries;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ZeDeX.Domain.Common.Entities;
 using ZeDeX.Domain.Repositories;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Address;
@@ -22,31 +19,32 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
         public IQueryable<Partner> All()
         {
             return _context.Partners.Select(e => new Partner
-                                                     {
-                                                        Id = e.Id,
-                                                        DocumentNumber = e.DocumentNumber,
-                                                        Address = new Address
-                                                        {
-                                                            Id = e.Address.Id,
-                                                            Location = e.Address.Location
-                                                        },
-                                                        Owner = new OwnerEmployee
-                                                        {
-                                                            Id = e.Owner.Id,
-                                                            FirstName = e.Owner.FirstName,
-                                                            LastName = e.Owner.LastName
-                                                        },
-                                                        CoverageArea = new CoverageArea
-                                                        {
-                                                            Id = e.CoverageArea.Id,
-                                                            Location = e.CoverageArea.Location as IMultiPolygon
-                                                        }
-                                                     }).AsQueryable();
+            {
+                Id = e.Id,
+                DocumentNumber = e.DocumentNumber,
+                Address = new Address
+                {
+                    Id = e.Address.Id,
+                    Location = e.Address.Location
+                },
+                Owner = new OwnerEmployee
+                {
+                    Id = e.Owner.Id,
+                    FirstName = e.Owner.FirstName,
+                    LastName = e.Owner.LastName
+                },
+                CoverageArea = new CoverageArea
+                {
+                    Id = e.CoverageArea.Id,
+                    Location = e.CoverageArea.Location as IMultiPolygon
+                }
+            }).AsQueryable();
         }
 
         public void Insert(Partner entity)
         {
-            var partnerPersistenceModel = new PartnerPersistenceModel {
+            var partnerPersistenceModel = new PartnerPersistenceModel
+            {
                 Owner = new EmployerPersistenceModel
                 {
                     IsOwner = entity.Owner.IsOwner,
@@ -73,7 +71,7 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
             var partner = _context.Partners.Where(e => e.Id == entityId).FirstOrDefault();
             if (partner == null) return null;
 
-            return  new Partner
+            return new Partner
             {
                 Id = partner.Id,
                 DocumentNumber = partner.DocumentNumber,

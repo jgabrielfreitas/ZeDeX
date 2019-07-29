@@ -1,8 +1,5 @@
-﻿using GeoAPI.Geometries;
-using NetTopologySuite.Geometries;
-using System;
+﻿using NetTopologySuite.Geometries;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ZeDeX.AppService.Partners.Command
 {
@@ -43,6 +40,5 @@ namespace ZeDeX.AppService.Partners.Command
         public MultiPolygon coverageArea { get; set; }
         [Newtonsoft.Json.JsonConverter(typeof(NetTopologySuite.IO.Converters.GeometryConverter))]
         public Point address { get; set; }
-        //public Address address { get; set; }
     }
 }

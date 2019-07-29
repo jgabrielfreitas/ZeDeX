@@ -1,10 +1,4 @@
-﻿using GeoAPI.Geometries;
-using NetTopologySuite;
-using NetTopologySuite.Geometries;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ZeDeX.AppService.Partners.Command;
 using ZeDeX.Domain.Common;
 using ZeDeX.Domain.Common.Entities;
@@ -28,13 +22,14 @@ namespace ZeDeX.AppService.Partners
         public async Task CreatePartner(CreatePartnerCommand command)
         {
 
-            var partner = new Partner {
+            var partner = new Partner
+            {
                 DocumentNumber = command.pdv.document,
                 Name = command.pdv.name,
                 Owner = new OwnerEmployee
                 {
-                  FirstName = command.owner.firstName,
-                  LastName = command.owner.lastName
+                    FirstName = command.owner.firstName,
+                    LastName = command.owner.lastName
                 },
                 Address = new Address
                 {

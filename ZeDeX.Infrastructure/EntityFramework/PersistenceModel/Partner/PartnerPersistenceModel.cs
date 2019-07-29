@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Address;
+﻿using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Address;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.CoverageArea;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Employer;
 

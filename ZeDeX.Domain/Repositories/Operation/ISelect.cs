@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using ZeDeX.Domain.Common.Entities;
 
 namespace ZeDeX.Domain.Repositories.Operation

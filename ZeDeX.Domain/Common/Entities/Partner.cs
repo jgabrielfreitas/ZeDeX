@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ZeDeX.Domain.Common.Entities
+﻿namespace ZeDeX.Domain.Common.Entities
 {
     public class Partner : EntityBase
     {

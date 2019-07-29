@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZeDeX.Domain.Common.Entities;
-
-namespace ZeDeX.Infrastructure.EntityFramework.Repositories
+﻿namespace ZeDeX.Infrastructure.EntityFramework.Repositories
 {
     public abstract class RepositoryBase
     {

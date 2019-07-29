@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZeDeX.Domain.Common.Exceptions;
+﻿using ZeDeX.Domain.Common.Exceptions;
 
 namespace ZeDeX.Domain.Common.Entities
 {
