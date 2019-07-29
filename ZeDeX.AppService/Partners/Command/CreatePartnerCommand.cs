@@ -4,6 +4,7 @@ using NetTopologySuite.IO.Converters;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ZeDeX.AppService.Common;
 
 namespace ZeDeX.AppService.Partners.Command
 {

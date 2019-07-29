@@ -1,14 +1,19 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using ZeDeX.DI;
+using ZeDeX.Domain.Common.Exceptions;
 
 namespace ZeDeX
 {
@@ -60,6 +65,28 @@ namespace ZeDeX
                 app.UseHsts();
             }
 
+            app.UseExceptionHandler(errorApp =>
+            {
+                errorApp.Run(async context =>
+                {
+                    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                    context.Response.StatusCode = 500;
+                    context.Response.ContentType = "application/json";
+
+                    var error = context.Features.Get<IExceptionHandlerFeature>();
+                    if (error != null)
+                    {
+                        var ex = error.Error;
+                        var message = ex.Message;
+
+                        await context.Response.WriteAsync(new ErrorDto()
+                        {
+                            Message = message
+                        }.ToString(), Encoding.UTF8);
+                    }
+                });
+            });
+
             app.UseSwagger();
             app.UseSwaggerUI(action =>
             {
@@ -69,6 +96,22 @@ namespace ZeDeX
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+        }
+
+        public class ErrorDto
+        {
+            public string Message { get; set; }
+
+            public override string ToString()
+            {
+                return JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    PreserveReferencesHandling = PreserveReferencesHandling.None,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    TypeNameHandling = TypeNameHandling.All
+                });
+            }
         }
 
         public class ValidateModelStateAttribute : ActionFilterAttribute

@@ -3,10 +3,12 @@ using NetTopologySuite;
 using NetTopologySuite.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZeDeX.AppService.Common;
 using ZeDeX.AppService.Partners.Command;
 using ZeDeX.AppService.Partners.DTOs;
 using ZeDeX.Domain.Common;
@@ -28,9 +30,8 @@ namespace ZeDeX.AppService.Partners
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreatePartner(CreatePartnerCommand command)
+        public async Task<PartnerDTO> CreatePartner(CreatePartnerCommand command)
         {
-
             var partner = new Partner
             {
                 DocumentNumber = command.pdv.document,
@@ -52,11 +53,13 @@ namespace ZeDeX.AppService.Partners
 
             _partnerRepository.Insert(partner);
             await _unitOfWork.CommitAsync();
+
+            return ConvertEntityToDTO(partner);
         }
 
         public async Task<NearbyPartnersDTO> GetNearestByLocation(double lat, double @long)
         {
-            var coordinate = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326).CreatePoint(new Coordinate(@long, lat));
+            var coordinate = GeographyFactory.CreateFactory().CreatePoint(new Coordinate(@long, lat));
 
             var result = await _partnerRepository.GetNearest(coordinate);
             if (result == null) return null;
