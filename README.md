@@ -39,10 +39,11 @@ CREATE TABLE dbo.PartnerCoveredAreas
 CREATE TABLE dbo.Partners
   (
      Id             INT IDENTITY,
-     DocumentNumber INT NOT NULL,
-     CoverageAreaId INT NOT NULL,
-     AddressId      INT NOT NULL,
-     OwnerId        INT NOT NULL,
+     DocumentNumber VARCHAR(14) NOT NULL,
+     Name			VARCHAR(50) NOT NULL,
+     CoverageAreaId INT			NOT NULL,
+     AddressId      INT			NOT NULL,
+     OwnerId        INT			NOT NULL,
      CONSTRAINT partners_pk PRIMARY KEY NONCLUSTERED (Id)
   )
 
