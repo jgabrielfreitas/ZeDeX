@@ -7,7 +7,7 @@ namespace ZeDeX.AppService.Partners
 {
     public interface IPartnerAppService
     {
-        Task CreatePartner(CreatePartnerCommand command);
+        Task<PartnerDTO> CreatePartner(CreatePartnerCommand command);
         Task<PartnerDTO> GetPartnerById(int partnerId);
 
         Task<NearbyPartnersDTO> GetNearestByLocation(double lat, double @long);

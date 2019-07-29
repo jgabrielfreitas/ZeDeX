@@ -14,7 +14,7 @@ namespace ZeDeX.AppService.Common
         private readonly IGeometryFactory _factory;
         private readonly JsonSerializer _geoJsonSerializer;
 
-        public GeoJsonConverter() : this(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326))
+        public GeoJsonConverter() : this(GeographyFactory.CreateFactory())
         {
             _geoJsonSerializer = GeoJsonSerializer.CreateDefault();
         }

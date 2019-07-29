@@ -19,8 +19,10 @@ namespace ZeDeX.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePartner([FromBody] CreatePartnerCommand command)
         {
-            await _appService.CreatePartner(command);
-            return NoContent();
+            var result = await _appService.CreatePartner(command);
+            if (result == null) return UnprocessableEntity();
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
