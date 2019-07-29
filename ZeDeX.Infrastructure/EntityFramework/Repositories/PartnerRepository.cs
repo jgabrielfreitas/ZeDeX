@@ -1,6 +1,9 @@
 ﻿using GeoAPI.Geometries;
+using NetTopologySuite;
 using NetTopologySuite.Geometries;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ZeDeX.Domain.Common.Entities;
 using ZeDeX.Domain.Repositories;
 using ZeDeX.Infrastructure.EntityFramework.PersistenceModel.Address;
@@ -19,27 +22,27 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
 
         public IQueryable<Partner> All()
         {
-            return _context.Partners.Select(e => new Partner
-            {
-                Id = e.Id,
-                DocumentNumber = e.DocumentNumber,
-                Address = new Address
-                {
-                    Id = e.Address.Id,
-                    Location = e.Address.Location
-                },
-                Owner = new OwnerEmployee
-                {
-                    Id = e.Owner.Id,
-                    FirstName = e.Owner.FirstName,
-                    LastName = e.Owner.LastName
-                },
-                CoverageArea = new CoverageArea
-                {
-                    Id = e.CoverageArea.Id,
-                    Location = e.CoverageArea.Location as MultiPolygon
-                }
-            }).AsQueryable();
+            return _context.Partners.Select(partner => ConvertEntityToPersistenceModel(partner)).AsQueryable();
+        }
+
+        public async Task<IEnumerable<Partner>> GetNearest(IPoint coordinates)
+        {
+            var partners = (from p in _context.Partners
+                            join pa in _context.PartnerAddresses on p.AddressId equals pa.Id
+                            join e in _context.Employees on p.OwnerId equals e.Id
+                            join ca in _context.CoverageAreas on p.CoverageAreaId equals ca.Id
+                            where ca.Location.Contains(coordinates)
+                            select new PartnerPersistenceModel
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                DocumentNumber = p.DocumentNumber,
+                                Address = pa,
+                                Owner = e,
+                                CoverageArea = ca
+                            }).OrderBy(x => x.Address.Location.Distance(coordinates)).Take(10);
+
+            return partners.Select(partner => ConvertEntityToPersistenceModel(partner)).ToList();
         }
 
         public void Insert(Partner entity)
@@ -58,7 +61,7 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
                 },
                 CoverageArea = new CoverageAreaPersistenceModel
                 {
-                    Location = entity.CoverageArea.Location
+                    Location = entity.CoverageArea.Location.Normalized().Reverse()
                 },
                 DocumentNumber = entity.DocumentNumber,
                 Name = entity.Name
@@ -85,6 +88,11 @@ namespace ZeDeX.Infrastructure.EntityFramework.RepositoriePartner
 
             if (partner == null) return null;
 
+            return ConvertEntityToPersistenceModel(partner);
+        }
+
+        private Partner ConvertEntityToPersistenceModel(PartnerPersistenceModel partner)
+        {
             return new Partner
             {
                 Id = partner.Id,

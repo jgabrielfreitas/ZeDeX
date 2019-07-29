@@ -1,4 +1,7 @@
-﻿using NetTopologySuite.Geometries;
+﻿using GeoAPI.Geometries;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO.Converters;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -27,10 +30,10 @@ namespace ZeDeX.AppService.Partners.Command
         [Required]
         public string name { get; set; }
         [Required]
-        [Newtonsoft.Json.JsonConverter(typeof(NetTopologySuite.IO.Converters.GeometryConverter))]
+        [JsonConverter(typeof(GeoJsonConverter))]
         public MultiPolygon coverageArea { get; set; }
         [Required]
-        [Newtonsoft.Json.JsonConverter(typeof(NetTopologySuite.IO.Converters.GeometryConverter))]
+        [JsonConverter(typeof(GeoJsonConverter))]
         public Point address { get; set; }
     }
 }
