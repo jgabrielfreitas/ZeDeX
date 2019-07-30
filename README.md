@@ -12,7 +12,7 @@ docker-compose build
 docker-compose up
 ```
 2. You'll need to create the `Zedex` database and application's data structure.
-> Run create_database.sql and create_database_structure.sql respectively
+> Run `create_database.sql` and `create_database_structure.sql` respectively
 
 ---
 
