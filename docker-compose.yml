@@ -1,0 +1,27 @@
+version: '3.6'
+
+networks: 
+  dockersql-network:
+    driver: bridge
+
+services:
+  aspnetapp:
+    container_name: ZeDeX
+    image: aspnetapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - dockersql-network
+    ports:
+      - "39500:39500"
+    depends_on:
+      - mssql
+
+  mssql:
+    container_name: mssql
+    image: microsoft/mssql-server-linux:2017-latest
+    networks:
+      - dockersql-network
+    volumes:
+      - ./data/mssql:/var/opt/mssql

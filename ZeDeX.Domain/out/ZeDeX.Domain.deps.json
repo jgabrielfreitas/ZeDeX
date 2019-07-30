@@ -1,0 +1,108 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.2",
+    "signature": "03570d5750f944a26a7bc3cb7bde872cdbf7aefc"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.2": {
+      "ZeDeX.Domain/1.0.0": {
+        "dependencies": {
+          "NetTopologySuite": "1.15.3"
+        },
+        "runtime": {
+          "ZeDeX.Domain.dll": {}
+        }
+      },
+      "GeoAPI.CoordinateSystems/1.7.5": {
+        "dependencies": {
+          "GeoAPI.Core": "1.7.5"
+        },
+        "runtime": {
+          "lib/netstandard2.0/GeoAPI.CoordinateSystems.dll": {
+            "assemblyVersion": "1.7.5.0",
+            "fileVersion": "1.7.5.0"
+          }
+        }
+      },
+      "GeoAPI.Core/1.7.5": {
+        "runtime": {
+          "lib/netstandard2.0/GeoAPI.dll": {
+            "assemblyVersion": "1.7.5.0",
+            "fileVersion": "1.7.5.0"
+          }
+        }
+      },
+      "NetTopologySuite/1.15.3": {
+        "dependencies": {
+          "NetTopologySuite.CoordinateSystems": "1.15.3",
+          "NetTopologySuite.Core": "1.15.3"
+        }
+      },
+      "NetTopologySuite.CoordinateSystems/1.15.3": {
+        "dependencies": {
+          "GeoAPI.CoordinateSystems": "1.7.5"
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/NetTopologySuite.CoordinateSystems.dll": {
+            "assemblyVersion": "1.15.3.0",
+            "fileVersion": "1.15.3.0"
+          }
+        }
+      },
+      "NetTopologySuite.Core/1.15.3": {
+        "dependencies": {
+          "GeoAPI.Core": "1.7.5"
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/NetTopologySuite.dll": {
+            "assemblyVersion": "1.15.3.0",
+            "fileVersion": "1.15.3.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ZeDeX.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GeoAPI.CoordinateSystems/1.7.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JBcvkeQFjCW9NTfkII5WiJNmnv0ZtYA/VTVljbIqDFWBJ8kHwu2UHd2MVStD/VVHVnLoyNcDIapsuTENdlyF3g==",
+      "path": "geoapi.coordinatesystems/1.7.5",
+      "hashPath": "geoapi.coordinatesystems.1.7.5.nupkg.sha512"
+    },
+    "GeoAPI.Core/1.7.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Dy/YkgZ1szgx+xbVWqMi+4++Fm6v3szbVdei1LKPRZ3meSvgNSMZxqhar5IAeaTj5LcUHLtLGdfyUtkjnYbg3A==",
+      "path": "geoapi.core/1.7.5",
+      "hashPath": "geoapi.core.1.7.5.nupkg.sha512"
+    },
+    "NetTopologySuite/1.15.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-al5K/4tBNykW8CNnqpBBF8z2gr/3XvnURG42eX03kkbkRnb3d8kzbnxWBhir6SrmcR2KijDyeuvJJbSpdnngWQ==",
+      "path": "nettopologysuite/1.15.3",
+      "hashPath": "nettopologysuite.1.15.3.nupkg.sha512"
+    },
+    "NetTopologySuite.CoordinateSystems/1.15.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vBofdqHOWUFkd3axF1p9BNLZ+5Cw7uqcLZun5bfnALkNJ0vZ8QN9pLOa9bFUulrWKyb1njQGke3nErbY3hpWlw==",
+      "path": "nettopologysuite.coordinatesystems/1.15.3",
+      "hashPath": "nettopologysuite.coordinatesystems.1.15.3.nupkg.sha512"
+    },
+    "NetTopologySuite.Core/1.15.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PvO7lSWjzaazm1m9fYBZkxAtXSkF+t9jneGyyMxKQ/4lso2RzZWrBO0KWeA5Zp8IWoI1Ar/jTodYmC5Nbwo4xw==",
+      "path": "nettopologysuite.core/1.15.3",
+      "hashPath": "nettopologysuite.core.1.15.3.nupkg.sha512"
+    }
+  }
+}
