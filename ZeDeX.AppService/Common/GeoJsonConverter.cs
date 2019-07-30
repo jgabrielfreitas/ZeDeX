@@ -25,7 +25,10 @@ namespace ZeDeX.AppService.Common
             _geoJsonSerializer = GeoJsonSerializer.CreateDefault();
         }
 
+        [Obsolete]
+#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+#pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
         {
             reader.Read();
             if (!(reader.TokenType == JsonToken.PropertyName && (string)reader.Value == "type"))

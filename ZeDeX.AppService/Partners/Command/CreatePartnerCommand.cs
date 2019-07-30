@@ -27,6 +27,7 @@ namespace ZeDeX.AppService.Partners.Command
     public class Pdv
     {
         [Required]
+        [StringLength(14)]
         public string document { get; set; }
         [Required]
         public string name { get; set; }
